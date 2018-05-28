@@ -1,7 +1,14 @@
 # mobx
 实现一个类似于mobx的数据处理类库。并研究vue的数据处理原理
 
-参考类库： https://github.com/xinyu198736/s-mobx
+参考类库： https://github.com/nx-js/observer-util
+
+本项目只是为了实现类mobx原理，学习其中内容。
+
+
+为了简单的实现，基本使用proxy。
+
+
 
 ### 原理笔记
 
