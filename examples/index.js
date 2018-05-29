@@ -1,43 +1,15 @@
-import { observable, observe} from '../src/index.js'
+import { observable, observe } from '@nx-js/observer-util';
+
+const user = observable({
+  name: 'Strong',
+  job: 'developer'
+});
 
 
+observe(() => console.log(`${user.name} is a ${user.job}`));
 
+// console.log => Bob is a developer
+user.name = 'Bob';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const counter = observable({ num: 0 })
-const countLogger = observe(() => console.log(counter.num))
-
-// this calls countLogger and logs 1
-counter.num++
-
-
-
-
-
-
-
-
-
-
-
-
-
+// console.log => Bob is a stylist
+user.job = 'stylist';
