@@ -69,20 +69,14 @@ export function observable(obj) {
     },
   
     set(target, key, value, receiver) {
+
       // 如果改动了 length 属性，或者新值与旧值不同，触发可观察队列任务
-      
-  
-      // 如果新值是对象，优先取原始对象
-      if (typeof value === 'object' && value) {
-          value = value.$raw || value
-      }
-  
-      Reflect.set(target, key, value, receiver)
-      queueObservers(target, key)
       if (key === 'length' || value !== Reflect.get(target, key, receiver)) {
-        
+        Reflect.set(target, key, value, receiver)
+        queueObservers(target, key)
       }
-      return true
+
+       return true
     },
   })
 

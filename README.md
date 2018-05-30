@@ -2,6 +2,8 @@
 实现一个类似于mobx的数据处理类库。并研究vue的数据处理原理
 
 参考类库： https://github.com/nx-js/observer-util
+参考博文： https://zhuanlan.zhihu.com/p/25585910
+
 
 本项目只是为了实现类mobx原理，学习其中内容。
 
