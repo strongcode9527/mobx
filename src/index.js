@@ -8,15 +8,46 @@ function isObservable(obj) {
 }
 
 
+const observers = new WeakMap()    // <object, Map<PropertyKey, Set<Observer>>>()
+// const queueObservers = new Set()
+const proxies = new WeakMap()
+
+let currentObserver = undefined // 用于记录observe的回调函数，便于依赖收集时回掉函数的记录
+
+function registerObserver(target, key) {
+  const observerMap = observers.get(target)
+  if(observerMap) {
+    let observerFuncs = observerMap.get(key)
+
+    if(!observerFuncs) {
+      const set = new Set()
+      observerMap.set(key, set)
+      observerFuncs = set
+    }
+
+    observerFuncs.add(currentObserver)
+    observerMap.set(key, observerFuncs)
+  }else {
+    const map = new Map()
+    const set = new Set()
+    set.add(currentObserver)
+    map.set(key, set)
+    observers.set(target, map)
+  }
+}
+
+function queueObservers(target, key) {
+  observers.get(target).get(key).forEach(func => func())
+}
 
 
 export function observable(obj) {
   if(!isPlainObject(obj)) {
     throw new Error('必须使用纯对象')
   }
-  const observers = new WeakMap()
-  const queueObservers = new Set()
-  const proxies = new WeakMap()
+
+  
+  
 
   const dynamicObject = new Proxy(obj, {
     get(target, key, receiver) {
@@ -27,11 +58,11 @@ export function observable(obj) {
         const existProxy = resultIsObject && proxies.get(result)
   
         // 如果获取的值为对象，继续进行代理
-        if (currentObserver) {
-            registerObserver(target, key)
-            if (resultIsObject) {
-                return existProxy || observable(result)
-            }
+        if (currentObserver) { 
+          registerObserver(target, key)
+          if (resultIsObject) {
+            return existProxy || observable(result)
+          }
         }
   
         return existProxy || result
@@ -52,6 +83,8 @@ export function observable(obj) {
     },
   })
 
+  proxies.set(obj, dynamicObject)
+
   return dynamicObject
 }
 
@@ -62,8 +95,11 @@ export function observe(func) {
   }
 
   //初次执行，收集依赖。
+  currentObserver = func
+
   func()
-  
+   
+  currentObserver = undefined
 
 }
 

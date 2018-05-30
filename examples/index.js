@@ -1,4 +1,4 @@
-import { observable, observe } from '@nx-js/observer-util';
+import {observable, observe} from '../src'
 
 const user = observable({
   name: 'Strong',
