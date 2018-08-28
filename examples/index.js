@@ -1,4 +1,6 @@
-import {observable, observe} from '../src'
+import { render } from 'react-dom'
+import React, { Component } from 'react'
+import { observable, observe } from '../src'
 
 let count = 1
 
@@ -7,8 +9,8 @@ const user = observable({
   job: 'developer',
   company: {
     name: 'mifanxing',
-    address: 'fengtai'
-  }
+    address: 'fengtai',
+  },
 });
 
 
@@ -25,3 +27,25 @@ user.company.name = 'jd'
 
 // 赋相同的值，是否会重复调用回调函数
 user.company.name = 'jd'
+
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      num: 3,
+    }
+  }
+
+  render() {
+    const { num } = this.state
+    return (
+      <div>
+        {num}
+      </div>
+    )
+  }
+}
+
+render(<App />, document.getElementById('root'))

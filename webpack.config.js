@@ -1,11 +1,9 @@
-const path = require('path'),
-      HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 
 module.exports = {
-  entry: {
-    index: ['./examples/index.js']
-  },
+  entry: ['./examples/index.js'],
   output: {
     path: path.resolve(__dirname, '/dist'),
     filename: 'bundle-[hash].js',
@@ -14,13 +12,13 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: ['babel-loader'],
-        exclude: /node_modules/
-      }
-    ]
+        use: ['babel-loader', 'eslint-loader'],
+        exclude: /node_modules/,
+      },
+    ],
   },
   devServer: {
-    contentBase: path.resolve(__dirname, "dist"),
+    contentBase: path.resolve(__dirname, 'dist'),
     port: 9000,
     open: true,
     hot: true,
@@ -28,7 +26,7 @@ module.exports = {
   mode: 'development',
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html'
+      template: 'index.html',
     }),
   ],
 }
