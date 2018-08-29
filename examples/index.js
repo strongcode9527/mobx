@@ -49,3 +49,18 @@ class App extends Component {
 }
 
 render(<App />, document.getElementById('root'))
+
+function decora(target, key, descriptor) {
+  console.log('n deco', target, key, descriptor)
+  descriptor.writable = false
+  return descriptor
+}
+
+@decora
+class B {
+  a = 3
+}
+
+const b = new B()
+
+console.log(b, Component.prototype.forceUpdate)
