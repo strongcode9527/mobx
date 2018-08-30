@@ -19,6 +19,7 @@
   "homepage": "https://github.com/strongcode9527/mobx#readme",
   "dependencies": {
     "is-plain-object": "^2.0.4",
+    "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
   },

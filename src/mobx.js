@@ -37,6 +37,7 @@ function registerObserver(target, key) {
 }
 
 function queueObservers(target, key) {
+  console.log('array', target, key, observers)
   observers.get(target).get(key).forEach(func => func())
 }
 
@@ -83,6 +84,7 @@ export function observable(obj) {
 
 
 export function observe(func) {
+  console.log('in observe', func)
   if (typeof func !== 'function') {
     throw new Error('params must be function')
   }
@@ -91,5 +93,5 @@ export function observe(func) {
   currentObserver = func
 
   func()
-  currentObserver = undefined
+  // currentObserver = undefined
 }
