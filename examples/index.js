@@ -7,6 +7,7 @@ import { observable, observe } from '../src'
 const user = observable({
   name: 1,
   job: 'developer',
+  names: ['strong', 'name', 'asdfasdf'],
   company: {
     name: 'mifanxing',
     address: 'fengtai',
@@ -38,19 +39,22 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { user } = this.props
+    const { user: { names } } = this.props
 
-    setInterval(() => {
-      user.name += 1
+    setTimeout(() => {
+      names.push('add')
     }, 1000)
   }
 
   render() {
-    const { user: { name } } = this.props
-    console.log(user)
+    const { user: { names } } = this.props
     return (
       <div>
-        {name}
+        {
+          names.map(name => (
+            <p>{name}</p>
+          ))
+        }
       </div>
     )
   }

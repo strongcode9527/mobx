@@ -1,4 +1,4 @@
-import isPlainObject from 'is-plain-object'
+// import isPlainObject from 'is-plain-object'
 
 
 // 使用WeakMap 只接受对象作为键值 key
@@ -37,15 +37,15 @@ function registerObserver(target, key) {
 }
 
 function queueObservers(target, key) {
-  console.log('array', target, key, observers)
-  observers.get(target).get(key).forEach(func => func())
+  console.log(target, key, observers);
+  (observers.get(target).get(key) || []).forEach(func => func())
 }
 
 
 export function observable(obj) {
-  if (!isPlainObject(obj)) {
-    throw new Error('必须使用纯对象')
-  }
+  // if (!isPlainObject(obj)) {
+  //   throw new Error('必须使用纯对象')
+  // }
 
 
   const dynamicObject = new Proxy(obj, {
@@ -68,6 +68,7 @@ export function observable(obj) {
     },
 
     set(target, key, value, receiver) {
+      console.log(target, key, value, receiver)
       // 如果改动了 length 属性，或者新值与旧值不同，触发可观察队列任务
       if (key === 'length' || value !== Reflect.get(target, key, receiver)) {
         Reflect.set(target, key, value, receiver)
