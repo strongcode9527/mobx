@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import { observable } from '../src'
-import { observer } from '../src/mobx-react'
+import { inject, Provider, observer } from '../src/mobx-react'
 
 const user = observable({
   name: 1,
@@ -15,7 +15,7 @@ const user = observable({
   },
 });
 
-
+@inject('user')
 @observer
 class App extends Component {
   static propTypes = {
@@ -23,15 +23,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // const { user: { names } } = this.props
+    const { user: { names } } = this.props
 
-    // setInterval(() => {
-    //   names.push('strong')
-    // }, 1000)
+    setInterval(() => {
+      names.push('strong')
+    }, 1000)
   }
 
   render() {
     const { user: { names } } = this.props
+    console.log(names)
     return (
       <div>
         {
@@ -47,4 +48,4 @@ class App extends Component {
 }
 
 
-render(<App user={user} />, document.getElementById('root'))
+render(<Provider user={user}><App /></Provider>, document.getElementById('root'))

@@ -19,10 +19,11 @@ module.exports = {
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
-    port: 9000,
+    port: 9527,
     open: true,
     hot: true,
   },
+  devtool: 'inline-source-map',
   mode: 'development',
   plugins: [
     new HtmlWebpackPlugin({
