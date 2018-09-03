@@ -2,7 +2,8 @@ import { render } from 'react-dom'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
-import { observable, observe } from '../src'
+import { observable } from '../src'
+import { observer } from '../src/mobx-react'
 
 const user = observable({
   name: 1,
@@ -15,35 +16,18 @@ const user = observable({
 });
 
 
-function decora(target, key, descriptor) {
-  const prevRender = target.prototype.render
-
-  function newRender() {
-    if (!this.MOBX_REGISTER) {
-      observe(this.forceUpdate.bind(this))
-    }
-    this.MOBX_REGISTER = true
-    return prevRender.call(this)
-  }
-
-  target.prototype.render = newRender
-
-  return descriptor
-}
-
-
-@decora
+@observer
 class App extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
   }
 
   componentDidMount() {
-    const { user: { names } } = this.props
+    // const { user: { names } } = this.props
 
-    setTimeout(() => {
-      names.push('add')
-    }, 1000)
+    // setInterval(() => {
+    //   names.push('strong')
+    // }, 1000)
   }
 
   render() {
@@ -52,7 +36,9 @@ class App extends Component {
       <div>
         {
           names.map(name => (
-            <p>{name}</p>
+            <p key={name}>
+              {name}
+            </p>
           ))
         }
       </div>
