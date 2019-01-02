@@ -82,14 +82,13 @@ export function observable(obj) {
 }
 
 
-export function observe(func) {
+export function observe(func, updateFunc) {
   if (typeof func !== 'function') {
     throw new Error('params must be function')
   }
 
   // 初次执行，收集依赖。
-  currentObserver = func
-
+  currentObserver = updateFunc
   func()
   // currentObserver = undefined
 }

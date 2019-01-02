@@ -23,16 +23,19 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // const { user: { names } } = this.props
+    const { user: { names } } = this.props
 
-    // setInterval(() => {
-    //   names.push('strong')
-    // }, 1000)
+    let i = 0
+
+    setInterval(() => {
+      names.push(`strong${i}`)
+      i++
+    }, 1000)
   }
 
   render() {
     const { user: { names } } = this.props
-    console.log(names)
+
     return (
       <div>
         {

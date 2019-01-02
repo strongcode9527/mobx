@@ -39,7 +39,7 @@ export function observer(target, key, descriptor) {
   function newRender() {
     if (!this.MOBX_REGISTER) {
       target.prototype.render = newRender
-      observe(this.forceUpdate.bind(this))
+      observe(prevRender.bind(this), this.forceUpdate.bind(this))
       this.MOBX_REGISTER = true
       return ''
     }
