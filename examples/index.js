@@ -1,4 +1,3 @@
-import { render } from 'react-dom'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
@@ -6,7 +5,7 @@ import { observable } from '../src'
 import { inject, Provider, observer } from '../src/mobx-react'
 
 const user = observable({
-  name: 1,
+  name: 'lizhuang',
   job: 'developer',
   names: ['strong', 'name', 'asdfasdf'],
   company: {
@@ -17,38 +16,35 @@ const user = observable({
 
 @inject('user')
 @observer
-class App extends Component {
+class Item extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
   }
 
-  componentDidMount() {
-    const { user: { names } } = this.props
-
-    let i = 0
-
-    setInterval(() => {
-      names.push(`strong${i}`)
-      i++
-    }, 1000)
+  handleClick = () => {
+    const { user } = this.props
+    user.name = 'strong'
   }
 
   render() {
-    const { user: { names } } = this.props
+    const { user: { name } } = this.props
 
     return (
-      <div>
-        {
-          names.map(name => (
-            <p key={name}>
-              {name}
-            </p>
-          ))
-        }
+      <div className="test" onClick={this.handleClick}>
+        {name}
       </div>
     )
   }
 }
 
 
-render(<Provider user={user}><App /></Provider>, document.getElementById('root'))
+const App = () => (
+  <Provider user={user}>
+    <Item />
+  </Provider>
+)
+
+
+export default App
+
+// render(, document.getElementById('root'))
