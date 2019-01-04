@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-
+import { render } from 'react-dom'
 import { observable } from '../src'
 import { inject, Provider, observer } from '../src/mobx-react'
 
@@ -16,7 +16,7 @@ const user = observable({
 
 @inject('user')
 @observer
-class Item extends Component {
+class Strong extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
   }
@@ -37,14 +37,17 @@ class Item extends Component {
   }
 }
 
+class App extends Component {
+  render() {
+    return (
+      <Provider user={user}>
+        <Strong />
+      </Provider>
+    )
+  }
+}
 
-const App = () => (
-  <Provider user={user}>
-    <Item />
-  </Provider>
-)
+render(<App />, document.getElementById('root'))
 
 
-export default App
-
-// render(, document.getElementById('root'))
+// export default App

@@ -22,11 +22,14 @@ export function inject(propName) {
 }
 
 
-export const Provider = ({ children, ...props }) => (
-  <Context.Provider value={props}>
-    {children}
-  </Context.Provider>
-)
+export function Provider({ children, ...props }) {
+  console.log(children, props)
+  return (
+    <Context.Provider value={props}>
+      {children}
+    </Context.Provider>
+  )
+}
 
 Provider.propTypes = {
   children: PropTypes.object.isRequired,
