@@ -1,11 +1,12 @@
+import { render } from 'react-dom'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { render } from 'react-dom'
+
 import { observable } from '../src'
 import { inject, Provider, observer } from '../src/mobx-react'
 
 const user = observable({
-  name: 'lizhuang',
+  name: 1,
   job: 'developer',
   names: ['strong', 'name', 'asdfasdf'],
   company: {
@@ -21,33 +22,25 @@ class Strong extends Component {
     user: PropTypes.object.isRequired,
   }
 
-  handleClick = () => {
-    const { user } = this.props
-    user.name = 'strong'
-  }
-
   render() {
     const { user: { name } } = this.props
-
+    console.log('old render ')
     return (
-      <div className="test" onClick={this.handleClick}>
+      <div className="test">
         {name}
       </div>
     )
   }
 }
 
-class App extends Component {
-  render() {
-    return (
-      <Provider user={user}>
-        <Strong />
-      </Provider>
-    )
-  }
+function App() {
+  return (
+    <Provider user={user}>
+      <Strong />
+    </Provider>
+  )
 }
 
-render(<App />, document.getElementById('root'))
+// render(<App />, document.getElementById('root'))
 
-
-// export default App
+export default App

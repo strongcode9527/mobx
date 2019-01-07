@@ -23,7 +23,6 @@ export function inject(propName) {
 
 
 export function Provider({ children, ...props }) {
-  console.log(children, props)
   return (
     <Context.Provider value={props}>
       {children}
@@ -44,12 +43,16 @@ export function observer(target, key, descriptor) {
       target.prototype.render = newRender
       observe(prevRender.bind(this), this.forceUpdate.bind(this))
       this.MOBX_REGISTER = true
-      return ''
+      return prevRender.call(this)
     }
+    
+    console.log('in new Render', prevRender)
+
     return prevRender.call(this)
   }
 
   target.prototype.render = newRender
 
+  console.log(target.prototype.render)
   return descriptor
 }

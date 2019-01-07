@@ -10,7 +10,7 @@ configure({ adapter: new Adapter() })
 describe('A suite', function() {
   it('should render without throwing an error', function() {
 
-    expect(mount(<Test />).find('#test').length).toBe(1);
+    expect(mount(<Test />).find('.test').length).toBe(1);
   });
 
   // it('should be selectable by class "foo"', function() {
