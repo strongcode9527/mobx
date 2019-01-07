@@ -45,14 +45,10 @@ export function observer(target, key, descriptor) {
       this.MOBX_REGISTER = true
       return prevRender.call(this)
     }
-    
-    console.log('in new Render', prevRender)
-
     return prevRender.call(this)
   }
 
   target.prototype.render = newRender
 
-  console.log(target.prototype.render)
   return descriptor
 }

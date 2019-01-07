@@ -1,9 +1,8 @@
-import { render } from 'react-dom'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
-import { observable } from '../src'
-import { inject, Provider, observer } from '../src/mobx-react'
+import { observable } from '../index'
+import { inject, Provider, observer } from '../mobx-react'
 
 const user = observable({
   name: 1,
@@ -24,7 +23,6 @@ class Strong extends Component {
 
   render() {
     const { user: { name } } = this.props
-    console.log('old render ')
     return (
       <div className="test">
         {name}
@@ -57,6 +55,6 @@ class Unit extends Component {
   }
 }
 
-render(<Unit user={user} />, document.getElementById('root'))
+export default App
 
-user.name = 2
+export { Strong, Unit }

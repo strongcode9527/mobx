@@ -1,27 +1,35 @@
 import React from 'react'
 import Adapter from 'enzyme-adapter-react-16'
 import { shallow, mount, render, configure } from 'enzyme'
-import Test from '../../examples'
+import Test, { Unit } from './Examples'
+import { observable } from '../index'
 
 configure({ adapter: new Adapter() })
 
-
+const user = observable({
+  name: 1,
+  job: 'developer',
+  names: ['strong', 'name', 'asdfasdf'],
+  company: {
+    name: 'mifanxing',
+    address: 'fengtai',
+  },
+});
 
 describe('A suite', function() {
   it('should render without throwing an error', function() {
-
     expect(mount(<Test />).find('.test').length).toBe(1);
   });
 
-  // it('should be selectable by class "foo"', function() {
-  //   expect(shallow(<Foo />).is('.foo')).toBe(true);
-  // });
+  it('单元测试，检验修改后内容发生改变', async () => {
 
-  // it('should mount in a full DOM', function() {
-  //   expect(mount(<Foo />).find('.foo').length).toBe(1);
-  // });
+    const wrapper = mount(<Unit user={user}/> )
 
-  // it('should render to static HTML', function() {
-  //   expect(render(<Foo />).text()).toEqual('Bar');
-  // });
+    expect(wrapper.find('.test').getDOMNode().textContent).toBe('1');
+
+    // user.name = 2
+
+    expect(wrapper.find('.test').getDOMNode().textContent).toBe('1');
+  });
+
 });
