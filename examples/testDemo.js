@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
-import { observable } from '../index'
-import { inject, Provider, observer } from '../mobx-react'
+import { observable } from '../src/index'
+import { inject, Provider, observer } from '../src/mobx-react'
 
 const user = observable({
   name: 1,
@@ -31,13 +31,14 @@ class Strong extends Component {
   }
 }
 
-function App() {
+function Test() {
   return (
     <Provider user={user}>
       <Strong />
     </Provider>
   )
 }
+
 
 @observer
 class Unit extends Component {
@@ -55,6 +56,7 @@ class Unit extends Component {
   }
 }
 
-export default App
-
-export { Strong, Unit }
+export {
+  Unit,
+  Test,
+}

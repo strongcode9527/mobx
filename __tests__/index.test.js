@@ -1,9 +1,10 @@
 import React from 'react'
 import Adapter from 'enzyme-adapter-react-16'
-import { expect } from 'chai'
+
 import { shallow, mount, render, configure } from 'enzyme'
-import Test, { Unit } from './Examples'
-import { observable } from '../index'
+
+import { observable } from '../src/index'
+import { Test, Unit } from '../examples/testDemo'
 
 configure({ adapter: new Adapter() })
 
@@ -22,21 +23,20 @@ function Random() {
 }
 
 describe('A suite', function() {
-  it('should render without throwing an error', function() {
-    expect(mount(<Test />).find('.test').length).equal(1);
+  it('provider提供props ，inject注入数据，能够正常渲染', function() {
+    expect(mount(<Test />).find('.test').length).toBe(1);
   });
 
 
   test('单元测试，检验修改后内容发生改变', function(){
     
     const wrapper = mount(<Unit user={user}></Unit>)
-    console.log(wrapper.find('.test').text())
-    expect(wrapper.find('.test').text()).equal('1');
+
+    expect(wrapper.find('.test').text()).toBe('1');
 
     user.name = 2
 
-    console.log(wrapper.find('.test').text())
-    expect(wrapper.find('.test').text()).equal('2');
+    expect(wrapper.find('.test').text()).toBe('2');
   });
 
 });
