@@ -58,5 +58,3 @@ class Unit extends Component {
 }
 
 render(<Unit user={user} />, document.getElementById('root'))
-
-user.name = 2
