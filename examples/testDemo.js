@@ -56,7 +56,26 @@ class Unit extends Component {
   }
 }
 
+@observer
+class List extends Component {
+  render() {
+    const { user: { names } } = this.props
+    return (
+      <div className="test">
+        {
+          names.map( name => (
+            <div className="name" key={name}>
+              {name}
+            </div>
+          ) )
+        }
+      </div>
+    )
+  }
+}
+
 export {
   Unit,
   Test,
+  List,
 }

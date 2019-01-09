@@ -22,12 +22,28 @@ class Strong extends Component {
     user: PropTypes.object.isRequired,
   }
 
+  componentDidMount() {
+    const { user: { names } } = this.props
+
+    let i = 0
+
+    setInterval(() => {
+      names.push(i++)
+    }, 1000)
+  }
+
   render() {
-    const { user: { name } } = this.props
+    const { user: { names } } = this.props
     console.log('old render ')
     return (
       <div className="test">
-        {name}
+        {
+          names.map(name => (
+            <div key={name}>
+              {name}
+            </div>
+          ))
+        }
       </div>
     )
   }
@@ -57,4 +73,4 @@ class Unit extends Component {
   }
 }
 
-render(<Unit user={user} />, document.getElementById('root'))
+render(<App user={user} />, document.getElementById('root'))
