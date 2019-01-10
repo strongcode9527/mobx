@@ -8,15 +8,6 @@ import { Test, Unit, List } from '../examples/testDemo'
 
 configure({ adapter: new Adapter() })
 
-const user = observable({
-  name: 1,
-  job: 'developer',
-  names: ['strong', 'name', 'asdfasdf'],
-  company: {
-    name: 'mifanxing',
-    address: 'fengtai',
-  },
-});
 
 function Random() {
   return <div>strong</div>
@@ -43,29 +34,28 @@ describe('A suite', function() {
     expect(wrapper.find('.test').text()).toBe('2');
   });
 
-  it('测试数组数据添加以及删除数据', function() {
+  it('测试数组数据添加以及删除数据', async () => {
 
     const user = observable({
-      names: ['strong', 'name', 'asdfasdf'],
+      names: ['strong', 'name', 'a'],
     });
 
     const wrapper = mount(<List user={user} />)
 
     expect(wrapper.find('.name').length).toBe(3)
 
-    console.log(wrapper.find('.name'))
-
-    user.names.push('strong1')
-
-    console.log(wrapper.find('.name'))
+    user.names.push('b')
     
+    // 当网页更新后，需要手动强制刷新wrapper，正样才能正常测试，真是天坑。。。。。。
+    wrapper.update()
+
     expect(wrapper.find('.name').length).toBe(4)
 
+    
     user.names.pop()
 
+    wrapper.update()
+
     expect(wrapper.find('.name').length).toBe(3)
-
   })
-
-
 });

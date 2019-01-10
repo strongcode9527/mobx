@@ -27,14 +27,14 @@ class Strong extends Component {
 
     let i = 0
 
-    setInterval(() => {
+    setTimeout(() => {
       names.push(i++)
     }, 1000)
   }
 
   render() {
     const { user: { names } } = this.props
-    console.log('old render ')
+
     return (
       <div className="test">
         {

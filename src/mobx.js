@@ -89,6 +89,8 @@ export function observe(func, updateFunc) {
 
   // 初次执行，收集依赖。
   currentObserver = updateFunc
+
   func()
-  // currentObserver = undefined
+
+  currentObserver = undefined
 }

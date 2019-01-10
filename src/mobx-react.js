@@ -43,7 +43,6 @@ export function observer(target, key, descriptor) {
       target.prototype.render = newRender
       observe(prevRender.bind(this), this.forceUpdate.bind(this))
       this.MOBX_REGISTER = true
-      return prevRender.call(this)
     }
     return prevRender.call(this)
   }
