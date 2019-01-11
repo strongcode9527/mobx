@@ -16,7 +16,20 @@
 
 
 在mobx中autoRun是一个非常重要的api，可以利用这个api，开发出mobx-react.核心思想就是在组件外面包一层autoRun。一旦属性发生变化，就会立刻出发回调，组建直接触发forceUpdate。
-在许多的博文中，直接踢出，mobx-react，其实是直接将react，vue化。
+在许多的博文中，直接提出，mobx-react，其实是直接将react，vue化。
+
+
+分两种情况：
+
+##### class Component
+
+直接收集render的依赖，并且绑定forceUpdate作为autoRun的回调函数
+
+
+##### stateless Component
+
+因为无状态组件，没有forceUpdate api，而且没有生命周期函数，所以我们无法解绑autorun，所以需要将statelessComponent包装成classComponent
+
 
 
 #### mobx有一个基本的行为就是依赖收集。

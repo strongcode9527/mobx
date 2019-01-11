@@ -8,13 +8,8 @@ import { Test, Unit, List } from '../examples/testDemo'
 
 configure({ adapter: new Adapter() })
 
-
-function Random() {
-  return <div>strong</div>
-}
-
 describe('A suite', function() {
-  it('provider提供props ，inject注入数据，能够正常渲染', function() {
+  it('provider 提供 props ，inject注入数据，能够正常渲染', function() {
     expect(mount(<Test />).find('.test').length).toBe(1);
   });
 
@@ -51,7 +46,6 @@ describe('A suite', function() {
 
     expect(wrapper.find('.name').length).toBe(4)
 
-    
     user.names.pop()
 
     wrapper.update()

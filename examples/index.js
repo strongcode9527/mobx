@@ -15,62 +15,77 @@ const user = observable({
   },
 });
 
-@inject('user')
-@observer
-class Strong extends Component {
-  static propTypes = {
-    user: PropTypes.object.isRequired,
-  }
+// @inject('user')
+// @observer
+// class Strong extends Component {
+//   static propTypes = {
+//     user: PropTypes.object.isRequired,
+//   }
 
-  componentDidMount() {
-    const { user: { names } } = this.props
+//   componentDidMount() {
+//     const { user: { names } } = this.props
 
-    let i = 0
+//     let i = 0
 
-    setTimeout(() => {
-      names.push(i++)
-    }, 1000)
-  }
+//     setTimeout(() => {
+//       names.push(i++)
+//     }, 1000)
+//   }
 
-  render() {
-    const { user: { names } } = this.props
+//   render() {
+//     const { user: { names } } = this.props
 
-    return (
-      <div className="test">
-        {
-          names.map(name => (
-            <div key={name}>
-              {name}
-            </div>
-          ))
-        }
-      </div>
-    )
-  }
-}
+//     return (
+//       <div className="test">
+//         {
+//           names.map(name => (
+//             <div key={name}>
+//               {name}
+//             </div>
+//           ))
+//         }
+//       </div>
+//     )
+//   }
+// }
 
-function App() {
+// function App() {
+//   return (
+//     <Provider user={user}>
+//       <Strong />
+//     </Provider>
+//   )
+// }
+
+// @observer
+// class Unit extends Component {
+//   static propTypes = {
+//     user: PropTypes.object.isRequired,
+//   }
+
+//   render() {
+//     const { user: { name } } = this.props
+//     return (
+//       <div className="test">
+//         {name}
+//       </div>
+//     )
+//   }
+// }
+
+
+const Func = observer(({ user: { name } }) => {
   return (
-    <Provider user={user}>
-      <Strong />
-    </Provider>
+    <div className="test">
+      {name}
+    </div>
   )
-}
+})
 
-@observer
-class Unit extends Component {
-  static propTypes = {
-    user: PropTypes.object.isRequired,
-  }
+render(<Func user={user} />, document.getElementById('root'))
 
-  render() {
-    const { user: { name } } = this.props
-    return (
-      <div className="test">
-        {name}
-      </div>
-    )
-  }
-}
+let i = 0
 
-render(<App user={user} />, document.getElementById('root'))
+setInterval(() => {
+  user.name = i++
+}, 1000)

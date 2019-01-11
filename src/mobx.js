@@ -37,7 +37,7 @@ function registerObserver(target, key) {
 }
 
 function queueObservers(target, key) {
-  (observers.get(target).get(key) || []).forEach(func => func())
+  ((observers.get(target) && observers.get(target).get(key)) || []).forEach(func => func())
 }
 
 

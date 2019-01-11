@@ -1,18 +1,18 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
 import { observe } from './mobx'
 
 const Context = React.createContext({ user: 'strong' })
 
 export function inject(propName) {
-  return function decorator(Component) {
+  return function decorator(Comp) {
     return function Inject(props) {
       return (
         <Context.Consumer>
           {
             value => (
-              <Component {...props} {...{ [propName]: value[propName] }} />
+              <Comp {...props} {...{ [propName]: value[propName] }} />
             )
           }
         </Context.Consumer>
@@ -36,18 +36,42 @@ Provider.propTypes = {
 
 // 装饰器
 export function observer(target, key, descriptor) {
-  const prevRender = target.prototype.render
+
+  if (typeof target !== 'function') {
+    throw new Error('第一个参数必须是函数')
+  }
+
+  let componentClass = target
+
+  // statelessComponent做特殊处理
+  if (
+    typeof componentClass === 'function'
+    && (!componentClass.prototype || !componentClass.prototype.render) 
+    && !componentClass.isReactClass
+    && !Component.isPrototypeOf(componentClass)
+  ) {
+    componentClass = class Com extends Component {
+      static displayName = componentClass.name
+    }
+
+    componentClass.prototype.render = target
+  }
+
+  const prevRender = componentClass.prototype.render
+
 
   function newRender() {
     if (!this.MOBX_REGISTER) {
-      target.prototype.render = newRender
-      observe(prevRender.bind(this), this.forceUpdate.bind(this))
+      componentClass.prototype.render = newRender
+      observe(prevRender.bind(this, this.props), this.forceUpdate.bind(this))
       this.MOBX_REGISTER = true
     }
-    return prevRender.call(this)
+    console.log(this.props)
+    return prevRender.call(this, this.props)
   }
 
-  target.prototype.render = newRender
+  componentClass.prototype.render = newRender
 
-  return descriptor
+
+  return componentClass
 }
