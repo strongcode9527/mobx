@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import { shallow, mount, render, configure } from 'enzyme'
 
 import { observable } from '../src/index'
-import { Test, Unit, List } from '../examples/testDemo'
+import { Test, Unit, List, StateLess } from '../examples/testDemo'
 
 configure({ adapter: new Adapter() })
 
@@ -52,4 +52,20 @@ describe('A suite', function() {
 
     expect(wrapper.find('.name').length).toBe(3)
   })
+
+  it('stateless组件测试', function(){
+
+    const user = observable({
+      name: 1,
+    });
+
+    const wrapper = mount(<StateLess user={user}></StateLess>)
+
+    expect(wrapper.find('.test').text()).toBe('1');
+
+    user.name = 2
+
+    expect(wrapper.find('.test').text()).toBe('2');
+  });
+
 });

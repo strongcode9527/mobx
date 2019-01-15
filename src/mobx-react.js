@@ -51,7 +51,7 @@ export function observer(target, key, descriptor) {
     && !Component.isPrototypeOf(componentClass)
   ) {
     componentClass = class Com extends Component {
-      static displayName = componentClass.name
+      static displayName = componentClass.name ? `Hoc${componentClass.name}` : 'HocStatelessComponent'
     }
 
     componentClass.prototype.render = target
@@ -66,7 +66,6 @@ export function observer(target, key, descriptor) {
       observe(prevRender.bind(this, this.props), this.forceUpdate.bind(this))
       this.MOBX_REGISTER = true
     }
-    console.log(this.props)
     return prevRender.call(this, this.props)
   }
 

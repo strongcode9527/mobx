@@ -74,8 +74,15 @@ class List extends Component {
   }
 }
 
+const StateLess = observer(({ user: { name } }) => (
+  <div className="test">
+    {name}
+  </div>
+))
+
 export {
   Unit,
   Test,
   List,
+  StateLess,
 }
